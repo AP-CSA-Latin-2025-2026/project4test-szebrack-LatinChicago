@@ -1,0 +1,50 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Print Hello World
+      id: print-hello-world
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Print Hello World
+        setup-command: mvn install
+        command: mvn -Dtest=AppTest#testHelloWorld test
+        timeout: 1
+        max-score: 10
+    - name: Print birthday
+      id: print-birthday
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Print birthday
+        setup-command: mvn install
+        command: mvn -Dtest=AppTest#testBirthday test
+        timeout: 1
+        max-score: 10
+    - name: Print 10
+      id: print-10
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Print 10
+        setup-command: mvn install
+        command: mvn -Dtest=AppTest#testPrint10 test
+        timeout: 1
+        max-score: 10
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        PRINT-HELLO-WORLD_RESULTS: "${{steps.print-hello-world.outputs.result}}"
+        PRINT-BIRTHDAY_RESULTS: "${{steps.print-birthday.outputs.result}}"
+        PRINT-10_RESULTS: "${{steps.print-10.outputs.result}}"
+      with:
+        runners: print-hello-world,print-birthday,print-10
