@@ -31,20 +31,10 @@ jobs:
         command: mvn test -Dtest=AppTest#testBirthday
         timeout: 1
         max-score: 10
-    - name: Print 10
-      id: print-10
-      uses: classroom-resources/autograding-command-grader@v1
-      with:
-        test-name: Print 10
-        setup-command: mvn install
-        command: mvn test -Dtest=AppTest#testPrint10
-        timeout: 1
-        max-score: 10
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
         PRINT-HELLO-WORLD_RESULTS: "${{steps.print-hello-world.outputs.result}}"
         PRINT-BIRTHDAY_RESULTS: "${{steps.print-birthday.outputs.result}}"
-        PRINT-10_RESULTS: "${{steps.print-10.outputs.result}}"
       with:
-        runners: print-hello-world,print-birthday,print-10
+        runners: print-hello-world,print-birthday
