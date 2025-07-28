@@ -19,7 +19,7 @@ jobs:
       with:
         test-name: Print Hello World
         setup-command: mvn install
-        command: mvn -Dtest=AppTest#testHelloWorld test
+        command: mvn test -Dtest=AppTest#testHelloWorld
         timeout: 1
         max-score: 10
     - name: Print birthday
@@ -28,7 +28,7 @@ jobs:
       with:
         test-name: Print birthday
         setup-command: mvn install
-        command: mvn -Dtest=AppTest#testBirthday test
+        command: mvn test -Dtest=AppTest#testBirthday
         timeout: 1
         max-score: 10
     - name: Print 10
@@ -37,7 +37,7 @@ jobs:
       with:
         test-name: Print 10
         setup-command: mvn install
-        command: mvn -Dtest=AppTest#testPrint10 test
+        command: mvn test -Dtest=AppTest#testPrint10
         timeout: 1
         max-score: 10
     - name: Autograding Reporter
