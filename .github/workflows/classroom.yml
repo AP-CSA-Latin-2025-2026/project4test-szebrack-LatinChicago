@@ -31,10 +31,20 @@ jobs:
         command: mvn test -Dtest=AppTest#testBirthday
         timeout: 1
         max-score: 10
+    - name: whole
+      id: whole
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: whole
+        setup-command: ''
+        command: gradle test
+        timeout: 1
+        max-score: 20
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
         PRINT-HELLO-WORLD_RESULTS: "${{steps.print-hello-world.outputs.result}}"
         PRINT-BIRTHDAY_RESULTS: "${{steps.print-birthday.outputs.result}}"
+        WHOLE_RESULTS: "${{steps.whole.outputs.result}}"
       with:
-        runners: print-hello-world,print-birthday
+        runners: print-hello-world,print-birthday,whole
